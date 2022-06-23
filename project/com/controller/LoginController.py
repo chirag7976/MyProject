@@ -49,7 +49,6 @@ def studentValidateLogin():
         studentVO.studentStatus = 'active'
 
         studentList = studentDAO.validateUsername(studentVO)
-        print('studentList at LoginController', studentList)
 
         if len(studentList) == 1  :
             if studentList[0].studentStatus == 'active':
@@ -73,7 +72,7 @@ def studentValidateLogin():
                 server.starttls()
 
                 # login details for mail server
-                server.login(sender, "cjp_@1234")
+                server.login(sender, "#####")  #use password instead of #####
                 text = msg.as_string()
 
                 # send email
@@ -141,11 +140,9 @@ def adminValidateLogin():
         loginVO.loginPassword = loginPassword
 
         loginVOList = loginDAO.validateLogin(loginVO)  # it returns serialized object values
-        # print('********************loginVOList',loginVOList)
 
         loginDictList = [i.as_dict() for i in loginVOList]
 
-        # print('*/**/*/*/*/*/*/*/*/*/*/*/loginDictList',loginDictList)
         lenLoginDictList = len(loginDictList)
 
         if lenLoginDictList == 0:
@@ -258,7 +255,7 @@ def facultyUpadatePassword():
                 server.starttls()
 
                 # login details for mail server
-                server.login(sender, "cjp_@1234")
+                server.login(sender, "####") #use password instead of #####
                 text = msg.as_string()
 
                 # send email
@@ -281,7 +278,6 @@ def facultyUpadatePassword():
 def studentLoadDashboard():
     try:
         if studentLoginSession() == 'student':
-            print('heeelo')
             return render_template('student/index.html')
         else:
             return redirect(url_for('studentLoadLogin'))
@@ -297,9 +293,7 @@ def adminLoginSession():
                 return 'admin'
             elif session['session_loginRole'] == 'faculty':
                 return 'faculty'
-            print('<<<<<True>>>>>>')
         else:
-            print('<<<<<<<False>>>>>>>')
             return False
     except Exception as ex:
         print(ex)
@@ -310,9 +304,7 @@ def studentLoginSession():
         if 'session_studentId' and 'session_studentLogin' in session:
             if session['session_studentLogin'] == 'active':
                 return 'student'
-            print('<<<<<True>>>>>')
         else:
-            print('<<<<<False>>>>>')
             return False
     except Exception as ex:
         print(ex)
