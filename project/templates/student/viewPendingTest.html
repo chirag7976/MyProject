@@ -1,0 +1,87 @@
+{% extends 'student/index.html' %}
+{% block page_title %}Student - Pending Test List{% endblock %}
+
+{% block mainbody %}
+
+    <div class="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="btn-group float-right">
+                        <ol class="breadcrumb hide-phone p-0 m-0">
+                            <li class="breadcrumb-item"><a href="/student/loadDashboard">Student Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="#">Manage Test</a></li>
+                        </ol>
+                    </div>
+                    <h4 class="page-title">Pending Test List</h4>
+                </div>
+            </div>
+        </div>
+        <!-- end page title end breadcrumb -->
+
+        <!-- datatable-->
+        <div class="row">
+            <div class="col-lg-12 col-sm-12">
+                <div class="card m-b-30 font-14">
+                    <div class="card-body table-responsive ">
+                        <table id="datatable" class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th style="width: 6%">Sr. No.</th>
+                                <th style="width: 15%">Date</th>
+                                <th style="width: 15%">Time</th>
+                                <th style="width: 25%">Topic</th>
+                                <th style="width: 25%">Pending Section</th>
+                                <th style="width: 14%">section 2</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for row in testVOList %}
+                                <tr>
+                                    <td>{{ testVOList.index(row) + 1 }}</td>
+                                    <td>{{ row[0]['test_Date'] }}</td>
+                                    <td>{{ row[0]['test_Time'] }}</td>
+                                    <td>{{ row[1]['topicName'] }}</td>
+                                    <td>Descriptive: Section 2</td>
+                                    <td style="text-align: center"><a class="btn btn-danger"
+                                               href="/student/viewLoadTest?testId={{ row[0]['testId'] }}"> Begin Test</a></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- end col -->
+        </div>
+        <!--end row -->
+        <!-- </div> -->
+        <!-- container -->
+    </div>
+    <!-- Page content Wrapper -->
+
+{% endblock %}
+
+{% block tail_js %}
+    <!-- Required datatable js -->
+    <script src="../../static/studentResources/js/jquery.dataTables.min.js"></script>
+    <script src="../../static/studentResources/js/dataTables.bootstrap4.min.js"></script>
+    <!-- Buttons examples -->
+    <script src="../../static/studentResources/js/dataTables.buttons.min.js"></script>
+    <script src="../../static/studentResources/js/buttons.bootstrap4.min.js"></script>
+    <script src="../../static/studentResources/js/jszip.min.js"></script>
+    <script src="../../static/studentResources/js/vfs_fonts.js"></script>
+    <script src="../../static/studentResources/js/buttons.html5.min.js"></script>
+    <script src="../../static/studentResources/js/buttons.print.min.js"></script>
+    <script src="../../static/studentResources/js/buttons.colVis.min.js"></script>
+    <!-- Responsive examples -->
+    <script src="../../static/studentResources/js/dataTables.responsive.min.js"></script>
+    <script src="../../static/studentResources/js/responsive.bootstrap4.min.js"></script>
+    <!-- Datatable init js -->
+    <script src="../../static/studentResources/js/datatables.init.js"></script>
+    <script type="text/javascript">$(document).ready(function () {
+        $('#datatable').DataTable();
+    });</script>
+{% endblock %}
+

@@ -1,0 +1,74 @@
+{% extends 'admin/index.html' %}
+{% block mainbody %}
+    <div class="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box">
+                        <div class="btn-group float-right">
+                            <ol class="breadcrumb hide-phone p-0 m-0">
+                                <li class="breadcrumb-item"><a href="/admin/loadDashboard">Admin Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="#">Manage Question Type</a></li>
+                                <li class="breadcrumb-item active">Edit Question Types</li>
+                            </ol>
+                        </div>
+                        <h4 class="page-title">Edit Question Type</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title end breadcrumb -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card m-b-30">
+                        <div class="card-body">
+
+                            <form class="" action="/admin/updateQuestionType" method="post">
+                                <!-- get type id, name, description and update it -->
+                                {% for row in questionTypeVOList %}
+                                    <input type="hidden" name="questionTypeId" value="{{ row['questionTypeId'] }}">
+                                    <div class="form-group">
+                                        <label>Question Type Name</label> <input type="text" name="questionTypeName"
+                                                                                 class="form-control" required
+                                                                                 value="{{ row['questionTypeName'] }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Question Type Description</label>
+                                        <div>
+                                            <textarea required class="form-control" name="questionTypeDescription"
+                                                      rows="5">{{ row['questionTypeDescription'] }}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div>
+                                            <button type="submit"
+                                                    class="btn btn-primary waves-effect waves-light">Update
+                                            </button>
+                                            <button type="reset"
+                                                    class="btn btn-secondary waves-effect m-l-5">Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- end col -->
+
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- container -->
+    </div>
+{% endblock %}
+
+
+
+{% block tail_js %}
+    <!-- Parsley js -->
+    <script type="text/javascript"
+            src="../../static/adminResources/js/parsley.min.js"></script>
+    <script type="text/javascript">$(document).ready(function () {
+        $('form').parsley();
+    });</script>
+{% endblock %}

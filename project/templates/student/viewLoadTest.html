@@ -1,0 +1,169 @@
+{% extends 'student/index.html' %}
+{% block page_title %}Test Page{% endblock %}
+{% block extraCSS %}
+    <link href="../../static/studentResources/css/viewLoadTest.css" rel="stylesheet" type="text/css">
+    <link href="../../static/studentResources/css/alertify.css" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block mainbody %}
+
+
+    <div class="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box">
+                        <div class="btn-group float-right">
+                            <ol class="breadcrumb hide-phone p-0 m-0">
+                                <li class="breadcrumb-item"><a href="/student/loadDashboard">Student Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="#">Manage Test</a></li>
+                                <li class="breadcrumb-item"><a href="#">Test</a></li>
+
+                            </ol>
+                        </div>
+                        <h4 class="page-title">Descriptive Test</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title end breadcrumb -->
+
+            <!-- datatable-->
+        <div class="row">
+            <div class="col-lg-12 col-sm-12">
+                <div class="card m-b-30 font-14">
+                    <div class="card-body table-responsive align-content-center">
+                        {%  for row in testVOList %}
+                        <input type="hidden" required id="testId" name="testId" value="{{ row[0]['testId'] }}">
+
+                            {% for row in testVOList %}
+                                <div class="row py-1">
+                                    <div class="col-3 p-0 text-right">
+                                        <b>Student Name :&nbsp</b>
+                                    </div>
+                                    <div class="col-3 p-0">
+                                        {{ row[2]['studentFirstName'] }} {{ row[2]['studentLastName'] }}
+                                    </div>
+                                    <div class="col-3 p-0 text-right">
+                                        <b>Student Email :&nbsp</b>
+                                    </div>
+                                    <div class="col-3 p-0">
+                                        {{ row[2]['studentEmail'] }}
+                                    </div>
+                                </div>
+                                <div class="row py-1">
+                                    <div class="col-3 p-0 text-right">
+                                        <b>Test Topic :&nbsp</b>
+                                    </div>
+                                    <div class="col-3 p-0">
+                                        {{ row[1]['topicName'] }}
+                                    </div>
+                                    <div class="col-3 p-0 text-right">
+                                        <b>Test Started :&nbsp</b>
+                                    </div>
+                                    <div class="col-3 p-0">
+                                        {{ row[0]['test_Date'] }} {{ row[0]['test_Time'] }}
+                                    </div>
+                                </div>
+                                <hr>
+
+                                <div class="row">
+                                    <div class="col-3 p-0 text-right">
+                                        <b>Question Type :&nbsp</b>
+                                    </div>
+                                    <div class="col-3 p-0">
+                                        Descriptive Test
+                                    </div>
+                                    <div class="col-3 p-0 text-right">
+                                        <b>Test Duration :&nbsp </b>
+                                    </div>
+                                    <div class="col-3 p-0">
+                                        120 secs for answer the question
+                                    </div>
+                                </div>
+                                <div class="row mt-4 p-2">
+                                    <div class="col-4 p-0 text-right ">
+                                        <p class="error">Note :&nbsp</p>
+                                    </div>
+                                    <div class="col-8 p-0">
+                                        <p><b>You have 120 seconds for answer question. Question is given below.
+                                            Answer must be descriptive and clear.<br>
+                                            This test only support English language.</b>
+                                        </p>
+                                    </div>
+                                </div>
+
+
+                            {% endfor %}
+
+                            {% for row in questionVOList %}
+                            <div class="row p-2">
+                                <div class="col-5 p-0 text-right">
+                                    <b style="font-size: large">Question Seven : &nbsp</b>
+                                </div>
+                                <div class="col-7 p-0">
+                                    <b style="font-size: large">{{ row['question'] }}</b>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                        <div class="row py-2 text-center">
+                            <div class="col-md-12">
+                                <button class="btn" id="startRecordingbtn">
+                                    <img src="../../static/studentResources/image/mic.png">
+                                </button>
+                            </div>
+
+                            <div  class=" mt-3 col-md-12" hidden='hidden' id="recordingalert">
+                                <div class="alert alert-danger" role="alert">
+                                    Recording Started
+                                </div>
+                            </div>
+                        </div>
+
+
+                        {% endfor %}
+
+
+
+                        <section id="timer_section" hidden >
+                            <div id="timer-border" class="text-center ">
+                                <h4><span id="timer"></span></h4>
+                            </div>
+                        </section>
+
+                        <section id='finish_test' class=" mt-2 text-center" hidden >
+                            <a href="/student/finishTest" class="btn btn-success" id="finishTest">
+                                    Complete test
+                            </a>
+                        </section>
+
+
+        </div>
+        <!--end row -->
+        <!-- </div> -->
+        <!-- container -->
+    </div>
+    <!-- Page content Wrapper -->
+
+{% endblock %}
+
+{% block tail_js %}
+    <!-- Buttons examples -->
+    <script src="../../static/studentResources/js/buttons.bootstrap4.min.js"></script>
+    <script src="../../static/studentResources/js/jszip.min.js"></script>
+    <script src="../../static/studentResources/js/vfs_fonts.js"></script>
+    <script src="../../static/studentResources/js/buttons.html5.min.js"></script>
+    <script src="../../static/studentResources/js/buttons.print.min.js"></script>
+    <script src="../../static/studentResources/js/buttons.colVis.min.js"></script>
+    <!-- Responsive examples -->
+    <script src="../../static/studentResources/js/responsive.bootstrap4.min.js"></script>
+    <!-- Test recording init js -->
+    <script src="../../static/studentResources/js/viewLoadTest.init.js"></script>
+    <!-- Alertify -->
+    <script src="../../static/studentResources/js/alertify.js"></script>
+    <script src="../../static/studentResources/js/ngAlertify.js"></script>
+
+
+    <script type="text/javascript">$(document).ready(function () {
+    });</script>
+{% endblock %}
+

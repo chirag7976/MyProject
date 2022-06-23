@@ -1,0 +1,109 @@
+{% extends 'faculty/index.html' %}
+{% block mainbody %}
+
+    <div class="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box">
+                        <div class="btn-group float-right">
+                            <ol class="breadcrumb hide-phone p-0 m-0">
+                                <li class="breadcrumb-item"><a href="/faculty/loadDashboard">Faculty Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="#">Manage Complain</a></li>
+                                <li class="breadcrumb-item active">View Complain</li>
+                            </ol>
+                        </div>
+                        <h4 class="page-title">Complains List</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title end breadcrumb -->
+
+            <div class="row">
+                <div class="col-lg-12 col-sm-12">
+                    <div class="card m-b-30 ">
+                        <div class="card-body table-responsive">
+                            <table id="datatable" class="table table-bordered ">
+                                <thead>
+                                <tr>
+                                    <th style="width: 20%"> Complain Subject</th>
+                                    <th style="width: 45%"> Complain Description</th>
+                                    <th style="width: 10%"> Complain Attachment</th>
+                                    <th style="width: 5%"> Complain Date</th>
+                                    <th style="width: 5%"> Complain Time</th>
+                                    <th style="width: 5%"> Complain Status</th>
+                                    <th style="width: 5%"> Complain Reply</th>
+                                    <th style="width: 5%"> Action</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                {% for row in complainVOList %}
+                                    <tr>
+                                        <td>{{ row['complainSubject'] }}</td>
+                                        <td>{{ row['complainDescription'] }}</td>
+                                        <td><a class="btn btn-dribbble"
+                                               href="{{ row['complainFilePath'] }}{{ row['complainFileName'] }}"
+                                               target="_blank">View</a></td>
+                                        <td>{{ row['complainDate'] }}</td>
+                                        <td>{{ row['complainTime'] }}</td>
+                                        <td>
+                                            <p class="text-danger">
+                                                {% if row['complainStatus'] == 'replied' %}
+                                                    <span class="text-success ">Replied</span>
+                                                {% else %}
+                                                    <span class="text-danger ">Pending</span>
+                                                {% endif %}
+                                            </p>
+                                        </td>
+                                        <td>
+                                            {% if row['complainStatus'] == 'replied' %}
+                                                <a href="/faculty/viewComplainReply?complainId={{ row['complainId'] }}">
+                                                    <button class="btn btn-success"> View</button>
+                                                </a>
+                                            {% endif %}
+                                        </td>
+                                        <td><a href="/faculty/deleteComplain?complainId={{ row['complainId'] }}">
+                                            <button class="btn btn-danger"> Remove</button>
+                                        </a></td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+
+
+        </div>
+        <!-- container -->
+    </div>
+    <!-- Page content Wrapper -->
+
+{% endblock %}
+
+{% block tail_js %}
+    <!-- Required datatable js -->
+    <script src="../../static/facultyResources/js/jquery.dataTables.min.js"></script>
+    <script src="../../static/facultyResources/js/dataTables.bootstrap4.min.js"></script>
+    <!-- Buttons examples -->
+    <script src="../../static/facultyResources/js/dataTables.buttons.min.js"></script>
+    <script src="../../static/facultyResources/js/buttons.bootstrap4.min.js"></script>
+    <script src="../../static/facultyResources/js/jszip.min.js"></script>
+    <script src="../../static/facultyResources/js/pdfmake.min.js"></script>
+    <script src="../../static/facultyResources/js/vfs_fonts.js"></script>
+    <script src="../../static/facultyResources/js/buttons.html5.min.js"></script>
+    <script src="../../static/facultyResources/js/buttons.print.min.js"></script>
+    <script src="../../static/facultyResources/js/buttons.colVis.min.js"></script>
+    <!-- Responsive examples -->
+    <script src="../../static/facultyResources/js/dataTables.responsive.min.js"></script>
+    <script src="../../static/facultyResources/js/responsive.bootstrap4.min.js"></script>
+    <!-- Datatable init js -->
+    <script src="../../static/facultyResources/js/datatables.init.js"></script>
+{% endblock %}
+

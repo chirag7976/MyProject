@@ -1,0 +1,112 @@
+{% extends 'faculty/index.html' %}
+{% block extra_css %}
+{% endblock %}
+{% block mainbody %}
+    <div class="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box">
+                        <div class="btn-group float-right">
+                            <ol class="breadcrumb hide-phone p-0 m-0">
+                                <li class="breadcrumb-item"><a href="/faculty/loadDashboard">Faculty Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="#">Manage Student</a></li>
+                                <li class="breadcrumb-item active">Edit Student</li>
+                            </ol>
+                        </div>
+                        <h4 class="page-title">Edit Student</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title end breadcrumb -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card m-b-30">
+                        <div class="card-body">
+                            <p class="text-muted m-b-30 font-14"></p>
+                            <form class="" action="/faculty/updateStudent" method="post">
+                                {% for row in studentVOList %}
+                                    <div class="form-group">
+                                        <input type="hidden" required name="studentId" value="{{ row['studentId'] }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Student First Name </label> <input type="text" name="studentFirstName"
+                                                                                  class="form-control" required
+                                                                                  value="{{ row['studentFirstName'] }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Student Last Name</label>
+                                        <div>
+                                            <input type="text" name="studentLastName"
+                                                   class="form-control" required value="{{ row['studentLastName'] }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <div>
+                                            <input type="email" name="studentEmail"
+                                                   class="form-control" required value="{{ row['studentEmail'] }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-3">
+                                            <label>Select Gender</label>
+                                        </div>
+                                        <div class="col-3 form-check">
+                                            <input class="form-check-input" type="radio" name="studentGender"
+                                                   value="male" id="genderMale" checked>
+                                            <label class="form-check-label" for="male">Male</label>
+                                        </div>
+                                        <div class="col-3 form-check">
+                                            <input class="form-check-input" type="radio" name="studentGender"
+                                                   value="female" id="genderFemale">
+                                            <label class="form-check-label" for="female">Female</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Contact Number</label>
+                                        <div>
+                                            <input data-parsley-type="number" type="text" name="studentContactNumber"
+                                                   class="form-control" required
+                                                   value="{{ row['studentContactNumber'] }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div>
+                                            <button type="submit" value="submit"
+                                                    class="btn btn-primary waves-effect waves-light">UPDATE
+                                            </button>
+
+                                            <a href="/faculty/viewStudent">
+                                                <button class="btn btn-secondary waves-effect m-l-5">
+                                                    Cancel
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- end col -->
+
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- container -->
+    </div>
+{% endblock %}
+
+
+
+{% block tail_js %}
+    <!-- Parsley js -->
+    <script type="text/javascript"
+            src="../../static/facultyResources/js/parsley.min.js"></script>
+    <script type="text/javascript">$(document).ready(function () {
+        $('form').parsley();
+    });</script>
+{% endblock %}

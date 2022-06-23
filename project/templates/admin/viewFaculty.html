@@ -1,0 +1,135 @@
+{% extends 'admin/index.html' %}
+{% block extraCSS %}
+    <link href="../../static/adminResources/css/alertify.css" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block mainbody %}
+
+    <div class="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="btn-group float-right">
+                        <ol class="breadcrumb hide-phone p-0 m-0">
+                            <li class="breadcrumb-item"><a href="/admin/loadDashboard">Admin Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="#">Manage Faculty</a></li>
+                            <li class="breadcrumb-item active">View Faculty</li>
+                        </ol>
+                    </div>
+                    <h4 class="page-title">Faculty List</h4>
+                </div>
+            </div>
+        </div>
+        <!-- end page title end breadcrumb -->
+
+        <!-- datatable-->
+        <div class="row">
+            <div class="col-lg-12 col-sm-12">
+                <div class="card m-b-30 font-14">
+                    <div class="card-body table-responsive">
+                        <table id="datatable" class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th style="width: 2%">Sr No.</th>
+                                <th style="width: 12%">Faculty Name</th>
+                                <th style="width: 10%">Gender</th>
+                                <th style="width: 12%">Contact Number</th>
+                                <th style="width: 14%">Email</th>
+                                <th style="width: 12%">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for row in facultyVOList %}
+                                <tr>
+                                    <td>{{ facultyVOList.index(row) + 1 }}</td>
+                                    <td>{{ row[0]['registerFirstName'] }} {{ row[0]['registerLastName'] }}</td>
+                                    <td>{{ row[0]['registerGender'] }}</td>
+                                    <td>{{ row[0]['registerContactNumber'] }}</td>
+                                    <td>{{ row[1]['loginUsername'] }}</td>
+                                    <td>
+                                        {% if  row[1]['loginStatus'] == 'active' %}
+                                            <button class="btn btn-danger"
+                                                    onclick="confirmAction(this, 'Are you sure you wish to Block this?', performBlock, {{ row[1]['loginId'] }}); return false;">
+                                            Block
+                                            </button>
+                                        {% else %}
+                                            <button class="btn btn-success"
+                                                    onclick="confirmAction(this, 'Are you sure you wish to Block this?', performUnblock, {{ row[1]['loginId'] }}); return false;">
+                                            Unblock
+                                            </button>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- end col -->
+        </div>
+        <!--end row -->
+        <!-- </div> -->
+        <!-- container -->
+    </div>
+    <!-- Page content Wrapper -->
+
+{% endblock %}
+
+{% block tail_js %}
+    <!-- Required datatable js -->
+    <script src="../../static/adminResources/js/jquery.dataTables.min.js"></script>
+    <script src="../../static/adminResources/js/dataTables.bootstrap4.min.js"></script>
+    <!-- Buttons examples -->
+    <script src="../../static/adminResources/js/dataTables.buttons.min.js"></script>
+    <script src="../../static/adminResources/js/buttons.bootstrap4.min.js"></script>
+    <script src="../../static/adminResources/js/jszip.min.js"></script>
+    <script src="../../static/adminResources/js/pdfmake.min.js"></script>
+    <script src="../../static/adminResources/js/vfs_fonts.js"></script>
+    <script src="../../static/adminResources/js/buttons.html5.min.js"></script>
+    <script src="../../static/adminResources/js/buttons.print.min.js"></script>
+    <script src="../../static/adminResources/js/buttons.colVis.min.js"></script>
+    <!-- Responsive examples -->
+    <script src="../../static/adminResources/js/dataTables.responsive.min.js"></script>
+    <script src="../../static/adminResources/js/responsive.bootstrap4.min.js"></script>
+    <!-- Datatable init js -->
+    <script src="../../static/adminResources/js/datatables.init.js"></script>
+    <!-- Alertify -->
+    <script src="../../static/adminResources/js/alertify.js"></script>
+    <script src="../../static/adminResources/js/ngAlertify.js"></script>
+
+    <script type="text/javascript">$(document).ready(function () {
+        $('#datatable').DataTable();
+    });</script>
+    <script type="text/javascript">
+        alertify.defaults.transition = "slide";
+        alertify.defaults.theme.ok = "btn btn-primary";
+        alertify.defaults.theme.cancel = "btn btn-danger";
+        alertify.defaults.theme.input = "form-control";
+
+        function performBlock ( button_element, loginId ) {
+                // perform your delete here
+                // a_element is the <a> tag that was clicked
+                var blockurl = "/admin/blockFaculty?loginId="+loginId;
+                window.open(blockurl, "_parent");
+            }
+
+        function performUnblock ( button_element, loginId ) {
+                // perform your delete here
+                // a_element is the <a> tag that was clicked
+                var unblockurl = "/admin/unblockFaculty?loginId="+loginId;
+                window.open(unblockurl, "_parent");
+            }
+
+        function confirmAction ( button_element, message, action, loginId) {
+            alertify.confirm(message, function(e) {
+                if (e) {
+                    // a_element is the <a> tag that was clicked
+                    if (action) {
+                        action(button_element, loginId);
+                    }
+                }
+            });
+        }
+    </script>
+{% endblock %}

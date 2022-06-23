@@ -1,0 +1,105 @@
+{% extends 'faculty/index.html' %}
+{% block mainbody %}
+
+    <div class="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box">
+                        <div class="btn-group float-right">
+                            <ol class="breadcrumb hide-phone p-0 m-0">
+                                <li class="breadcrumb-item"><a href="/faculty/loadDashboard">Faculty Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="#">Manage Test</a></li>
+                                <li class="breadcrumb-item active">View Test</li>
+                            </ol>
+                        </div>
+                        <h4 class="page-title">Test List</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title end breadcrumb -->
+
+            <div class="row">
+                <div class="col-lg-12 col-sm-12">
+                    <div class="card m-b-30 ">
+                        <div class="card-body table-responsive">
+                            <table id="datatable" class="table table-bordered ">
+                                <thead>
+                                <tr>
+                                    <th style="width: 6%">Sr No.</th>
+                                    <th style="width: 12%"> Student Name</th>
+                                    <th style="width: 18%"> Student Username</th>
+                                    <th style="width: 10%"> Test Date</th>
+                                    <th style="width: 10%"> Test Time</th>
+                                    <th style="width: 15%"> Topic</th>
+                                    <th style="width: 10%">Test Status</th>
+                                    <th style="width: 10%"> Test Details</th>
+                                </tr>
+                                </thead>
+
+
+                                <tbody>
+                                {% for row in testList %}
+                                    <tr>
+                                        <th>{{ testList.index(row) + 1 }}</th>
+                                        <td>{{ row[2]['studentFirstName'] }} {{ row[2]['studentLastName'] }}</td>
+                                        <td>{{ row[2]['studentEmail'] }}</td>
+                                        <td>{{ row[0]['test_Date'] }}</td>
+                                        <td>{{ row[0]['test_Time'] }}</td>
+                                        <td>{{ row[1]['topicName'] }}</td>
+                                        <td>
+                                            {% if row[0]['test_AnswerSeven'] == 'none' %}
+                                                Incomplete
+                                            {% else %}
+                                                Complete
+                                            {% endif %}
+                                        </td>
+                                        <td>{% if row[0]['test_AnswerSeven'] == 'none' %}
+                                            <a class="btn btn-info disabled mr-3"
+                                               href="#"> Pending </a>
+                                            {% else %}
+                                            <a class="btn btn-success mr-3"
+                                               href="/faculty/viewTestDetails?testId={{ row[0]['testId'] }}">View Details</a>
+                                            {% endif %}
+                                        </td>
+
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+
+
+        </div>
+        <!-- container -->
+    </div>
+    <!-- Page content Wrapper -->
+
+{% endblock %}
+
+{% block tail_js %}
+    <!-- Required datatable js -->
+    <script src="../../static/facultyResources/js/jquery.dataTables.min.js"></script>
+    <script src="../../static/facultyResources/js/dataTables.bootstrap4.min.js"></script>
+    <!-- Buttons examples -->
+    <script src="../../static/facultyResources/js/dataTables.buttons.min.js"></script>
+    <script src="../../static/facultyResources/js/buttons.bootstrap4.min.js"></script>
+    <script src="../../static/facultyResources/js/jszip.min.js"></script>
+    <script src="../../static/facultyResources/js/pdfmake.min.js"></script>
+    <script src="../../static/facultyResources/js/vfs_fonts.js"></script>
+    <script src="../../static/facultyResources/js/buttons.html5.min.js"></script>
+    <script src="../../static/facultyResources/js/buttons.print.min.js"></script>
+    <script src="../../static/facultyResources/js/buttons.colVis.min.js"></script>
+    <!-- Responsive examples -->
+    <script src="../../static/facultyResources/js/dataTables.responsive.min.js"></script>
+    <script src="../../static/facultyResources/js/responsive.bootstrap4.min.js"></script>
+    <!-- Datatable init js -->
+    <script src="../../static/facultyResources/js/datatables.init.js"></script>
+{% endblock %}
+

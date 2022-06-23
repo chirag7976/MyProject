@@ -1,0 +1,105 @@
+{% extends 'faculty/index.html' %}
+
+{% block mainbody %}
+
+    <div class="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box">
+                        <div class="btn-group float-right">
+                            <ol class="breadcrumb hide-phone p-0 m-0">
+                                <li class="breadcrumb-item"><a href="/faculty/loadDashboard">Faculty Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="#">Manage Feedback</a></li>
+                                <li class="breadcrumb-item active">View Feedback</li>
+                            </ol>
+                        </div>
+                        <h4 class="page-title">Feedback List</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title end breadcrumb -->
+
+            <div class="row">
+                <div class="col-lg-12 col-sm-12">
+                    <div class="card m-b-30 ">
+                        <div class="card-body table-responsive">
+                            <table id="datatable_viewComplain" class="table table-bordered ">
+                                <thead>
+                                <tr>
+                                    <th style="width: 10%"> Feedback Subject</th>
+                                    <th style="width: 40%"> Feedback Description</th>
+                                    <th style="width: 25%"> Feedback Rating</th>
+                                    <th style="width: 10%"> Feedback Date</th>
+                                    <th style="width: 10%"> Feedback Time</th>
+                                    <th style="width: 5%"> Action</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                {% for row in feedbackVOList %}
+                                    <tr>
+                                        <td>{{ row['feedbackSubject'] }}</td>
+                                        <td>{{ row['feedbackDescription'] }}</td>
+                                        <td><input type="hidden" required class="rating" name="feedbackRating"
+                                                   value="{{ row['feedbackRating'] }}"
+                                                   data-filled="mdi mdi-star font-32 text-primary" data-readonly
+                                                   data-empty="mdi mdi-star-outline font-32 text-muted"
+                                                   data-fractions="2"/></td>
+                                        <td>{{ row['feedbackDate'] }}</td>
+                                        <td>{{ row['feedbackTime'] }}</td>
+                                        <td><a href="/faculty/deleteFeedback?feedbackId={{ row['feedbackId'] }}">
+                                            <button class="btn btn-danger waves-effect waves-light" id="sa-warning">
+                                                Remove
+                                            </button>
+                                        </a></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+
+
+        </div>
+        <!-- container -->
+    </div>
+    <!-- Page content Wrapper -->
+
+{% endblock %}
+
+{% block tail_js %}
+    <!-- Required datatable js -->
+    <script src="../../static/facultyResources/js/jquery.dataTables.min.js"></script>
+    <script src="../../static/facultyResources/js/dataTables.bootstrap4.min.js"></script>
+    <!-- Buttons examples -->
+    <script src="../../static/facultyResources/js/dataTables.buttons.min.js"></script>
+    <script src="../../static/facultyResources/js/buttons.bootstrap4.min.js"></script>
+    <script src="../../static/facultyResources/js/jszip.min.js"></script>
+    <script src="../../static/facultyResources/js/pdfmake.min.js"></script>
+    <script src="../../static/facultyResources/js/vfs_fonts.js"></script>
+    <script src="../../static/facultyResources/js/buttons.html5.min.js"></script>
+    <script src="../../static/facultyResources/js/buttons.print.min.js"></script>
+    <script src="../../static/facultyResources/js/buttons.colVis.min.js"></script>
+    <!-- Responsive examples -->
+    <script src="../../static/facultyResources/js/dataTables.responsive.min.js"></script>
+    <script src="../../static/facultyResources/js/responsive.bootstrap4.min.js"></script>
+    <!-- Parsley js -->
+    <script src="../../static/facultyResources/js/parsley.min.js"></script>
+    <!-- Rating js -->
+    <script src="../../static/facultyResources/js/bootstrap-rating.min.js"></script>
+    <!-- Sweet-Alert  -->
+    <script src="../../static/facultyResources/js/sweetalert2.min.js"></script>
+    <script src="../../static/facultyResources/js/sweet-alert.init.js"></script>
+    <!-- Datatable init js -->
+    <script src="../../static/facultyResources/js/datatables.init.js"></script>
+    <script type="text/javascript">$(document).ready(function () {
+        $('#datatable_viewComplain').DataTable();
+    });</script>
+{% endblock %}
+

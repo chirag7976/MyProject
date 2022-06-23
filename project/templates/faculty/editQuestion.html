@@ -1,0 +1,104 @@
+{% extends 'faculty/index.html' %}
+{% block mainbody %}
+    <div class="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box">
+                        <div class="btn-group float-right">
+                            <ol class="breadcrumb hide-phone p-0 m-0">
+                                <li class="breadcrumb-item"><a href="/faculty">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="#">Manage Question</a></li>
+                                <li class="breadcrumb-item active">Edit Question</li>
+                            </ol>
+                        </div>
+                        <h4 class="page-title">Edit Question</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title end breadcrumb -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card m-b-30">
+                        <div class="card-body">
+                            <form class="" action="/faculty/updateQuestion" method="post">
+                                {% for row in questionVOList %}
+                                    <input type="hidden" , name="questionId" value="{{ row['questionId'] }}">
+                                    <div class="form-group">
+                                        <label>Qestion </label> <input type="text" name="question" required
+                                                                       class="form-control"
+                                                                       value="{{ row['question'] }}">
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label>Qestion Type </label>
+                                        <select class="form-control" required name="question_QuestionTypeId">
+                                            <option> Select Question Type</option>
+                                            {% for i in questionTypeVOList %}
+                                                {% if i['questionTypeId'] == row['question_QuestionTypeId'] %}
+                                                    <option selected
+                                                            value="{{ i['questionTypeId'] }}">{{ i['questionTypeName'] }}</option>
+                                                {% else %}
+                                                    <option value="{{ i['questionTypeId'] }}">{{ i['questionTypeName'] }}</option>
+                                                {% endif %}
+
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Qesttion Topic </label>
+                                        <select class="form-control" name="question_TopicId" required>
+                                            <option> Select Topic</option>
+                                            {% for i in topicVOList %}
+                                                {% if i['topicId'] == row['question_TopicId'] %}
+                                                    <option selected
+                                                            value="{{ i['topicId'] }}">{{ i['topicName'] }}</option>
+                                                {% else %}
+                                                    <option value="{{ i['topicId'] }}">{{ i['topicName'] }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Keywords </label>
+                                        <textarea class="form-control" rows="7"
+                                              name="keyword" required>{{ row['keyword'] }}</textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div>
+                                            <button type="submit"
+                                                    class="btn btn-primary waves-effect waves-light">Update
+                                            </button>
+                                            <button type="reset"
+                                                    class="btn btn-secondary waves-effect m-l-5">Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- end col -->
+
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- container -->
+    </div>
+{% endblock %}
+
+
+
+{% block tail_js %}
+    <!-- Parsley js -->
+    <script type="text/javascript"
+            src="../../static/facultyResources/js/parsley.min.js"></script>
+    <script type="text/javascript">$(document).ready(function () {
+        $('form').parsley();
+    });</script>
+{% endblock %}

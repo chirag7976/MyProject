@@ -1,0 +1,78 @@
+{% extends 'admin/index.html' %}
+{% block mainbody %}
+    <div class="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box">
+                        <div class="btn-group float-right">
+                            <ol class="breadcrumb hide-phone p-0 m-0">
+                                <li class="breadcrumb-item"><a href="/admin/loadDashboard">Admin Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="#">Manage Complain</a></li>
+                                <li class="breadcrumb-item active">Complain Reply</li>
+                            </ol>
+                        </div>
+                        <h4 class="page-title">Complain Reply</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title end breadcrumb -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card m-b-30">
+                        <div class="card-body">
+                            <h4 class="mt-0 header-title"></h4>
+                            <form class="" action="/admin/insertComplainReply" method="post"
+                                  enctype="multipart/form-data">
+                                <input type="hidden" name="complainId" value="{{ complainId }}">
+                                <div class="form-group">
+                                    <label> Reply Subject </label> <input type="text" name="replySubject"
+                                                                          class="form-control" required
+                                                                          placeholder="Enter Reply Subject">
+                                </div>
+                                <div class="form-group">
+                                    <label> Reply Description</label>
+                                    <div>
+                                        <textarea required class="form-control" name="replyMessage" rows="5"
+                                                  placeholder="Enter Reply"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Reply Attachment</label>
+                                    <input type="file" required name="replyFile" id="input-file-now"
+                                           class="form-control"
+                                           class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <div>
+                                        <button type="submit"
+                                                class="btn btn-primary waves-effect waves-light">Submit
+                                        </button>
+                                        <button type="reset"
+                                                class="btn btn-secondary waves-effect m-l-5">Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- end col -->
+
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- container -->
+    </div>
+{% endblock %}
+
+
+
+{% block tail_js %}
+    <!-- Parsley js -->
+    <script type="text/javascript"
+            src="../../static/adminResources/js/parsley.min.js"></script>
+    <script type="text/javascript">$(document).ready(function () {
+        $('form').parsley();
+    });</script>
+{% endblock %}

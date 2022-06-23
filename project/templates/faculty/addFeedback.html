@@ -1,0 +1,84 @@
+{% extends 'faculty/index.html' %}
+
+
+{% block mainbody %}
+    <div class="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box">
+                        <div class="btn-group float-right">
+                            <ol class="breadcrumb hide-phone p-0 m-0">
+                                <li class="breadcrumb-item"><a href="/faculty/loadDashboard">Faculty Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="#">Manage Feedback</a></li>
+                                <li class="breadcrumb-item active">Post Feedback</li>
+                            </ol>
+                        </div>
+                        <h4 class="page-title">Post Feedback</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title end breadcrumb -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card m-b-30">
+                        <div class="card-body">
+                            <p class="text-muted m-b-30 font-14"></p>
+                            <form class="" action="/faculty/insertFeedback" method="post">
+                                <div class="form-group">
+                                    <label>Feedback Subject</label> <input type="text" name="feedbackSubject"
+                                                                           class="form-control" required
+                                                                           placeholder="Enter Feedback Subjet">
+                                </div>
+                                <div class="form-group">
+                                    <label>Feedback Description</label>
+                                    <div>
+                                        <textarea required class="form-control" placeholder="Enter Feedback description"
+                                                  name="feedbackDescription"
+                                                  rows="5"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label>Feedback Rating</label>
+                                    <br>
+                                    <input type="hidden" required class="rating" name="feedbackRating"
+                                           data-filled="mdi mdi-star font-32 text-primary"
+                                           data-empty="mdi mdi-star-outline font-32 text-muted" data-fractions="2"/>
+                                </div>
+                                <div class="form-group">
+                                    <div>
+                                        <button type="submit"
+                                                class="btn btn-primary waves-effect waves-light">Post
+                                        </button>
+                                        <button type="reset"
+                                                class="btn btn-secondary waves-effect m-l-5">Reset
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- end col -->
+
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- container -->
+    </div>
+{% endblock %}
+
+
+
+
+
+{% block tail_js %}
+    <!-- Parsley js -->
+    <script type="text/javascript"
+            src="../../static/facultyResources/js/parsley.min.js"></script>
+    <script src="../../static/facultyResources/js/bootstrap-rating.min.js"></script>
+    <script type="text/javascript">$(document).ready(function () {
+        $('form').parsley();
+    });</script>
+{% endblock %}

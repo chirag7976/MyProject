@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,user-scalable=0,minimal-ui">
+    <title>{% block page_title %}Dashboard - Student{% endblock %}</title>
+    <meta content="Student Dashboard" name="description">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="../../static/studentResources/image/favicon.ico">
+    <link href="../../static/studentResources/css/morris.css" rel="stylesheet">
+    <link href="../../static/studentResources/css/bootstrap.min.css" rel="stylesheet"
+          type="text/css">
+    <link href="../../static/studentResources/css/icons.css" rel="stylesheet" type="text/css">
+    <link href="../../static/studentResources/css/style.css" rel="stylesheet" type="text/css">
+    {% block extraCSS %}
+    {% endblock %}
+</head>
+
+
+<body class="fixed-left">
+
+
+<!-- Begin page -->
+<div id="wrapper">
+    <!-- ========== Left Sidebar Start ========== -->
+    {% include 'student/menu.html' %}
+    <!-- Left Sidebar End -->
+
+    <!-- Start right Content here -->
+    <div class="content-page">
+        <!-- Start content -->
+        <div class="content">
+
+            <!-- Top Bar Start -->
+            {% include 'student/header.html' %}
+            <!-- Top Bar End -->
+
+            {% block mainbody %}
+                <!--breadcrumb-->
+                <div class="page-content-wrapper">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="page-title-box">
+                                    <div class="btn-group float-right">
+                                        <ol class="breadcrumb hide-phone p-0 m-0">
+                                            <li class="breadcrumb-item active">Student Dashboard</li>
+                                        </ol>
+                                    </div>
+                                    <h4 class="page-title">Dashboard</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title end breadcrumb -->
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12">
+                                <div class="card m-b-30 font-14">
+                                    <div class="card-body">
+                                        <h3 class="text-center mt-0 m-b-15">
+                                            Student Details
+                                        </h3>
+                                        <hr>
+                                        <div class="row mt-2">
+                                            <div class="col-6 p-0 text-right">
+                                                <p><b>Student Name :&nbsp</b></p>
+                                            </div>
+                                            <div class="col-6 p-0">
+                                                <P>{{session['session_studentFirstName']}} {{session['session_studentLastName']}}</P>
+                                            </div>
+                                            <div class="col-6 p-0 text-right">
+                                                <p><b>Email :&nbsp</b></p>
+                                            </div>
+                                            <div class="col-6 p-0">
+                                                <P>{{session['session_studentUsername']}}</P>
+                                            </div>
+                                            <div class="col-6 p-0 text-right">
+                                                <p><b>Gender :&nbsp</b></p>
+                                            </div>
+                                            <div class="col-6 p-0">
+                                                <P>{{session['session_studentGender']}}</P>
+                                            </div>
+                                            <div class="col-6 p-0 text-right">
+                                                <p><b>Contact Number :&nbsp</b></p>
+                                            </div>
+                                            <div class="col-6 p-0">
+                                                <P>{{session['session_studentContactNumber']}}</P>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <!-- container -->
+                </div>
+
+            {% endblock %}
+            <!-- Page content Wrapper -->
+        </div>
+        <!-- content -->
+    </div>
+    <!-- End Right content here -->
+
+    {% include 'student/footer.html' %}
+</div>
+<!-- END wrapper -->
+
+
+<!-- jQuery  -->
+<script src="../../static/studentResources/js/jquery.min.js"></script>
+<script src="../../static/studentResources/js/popper.min.js"></script>
+<script src="../../static/studentResources/js/bootstrap.min.js"></script>
+<script src="../../static/studentResources/js/modernizr.min.js"></script>
+<script src="../../static/studentResources/js/detect.js"></script>
+<script src="../../static/studentResources/js/fastclick.js"></script>
+<script src="../../static/studentResources/js/jquery.slimscroll.js"></script>
+<script src="../../static/studentResources/js/jquery.blockUI.js"></script>
+<script src="../../static/studentResources/js/waves.js"></script>
+<script src="../../static/studentResources/js/jquery.nicescroll.js"></script>
+<script src="../../static/studentResources/js/jquery.scrollTo.min.js"></script>
+<script src="../../static/studentResources/js/skycons.min.js"></script>
+<script src="../../static/studentResources/js/raphael-min.js"></script>
+<script src="../../static/studentResources/js/morris.min.js"></script>
+<script src="../../static/studentResources/js/dashborad.js"></script>
+<!-- App js -->
+<script src="../../static/studentResources/js/app.js"></script>
+<script>
+    /* BEGIN SVG WEATHER ICON */
+    if (typeof Skycons !== 'undefined') {
+        var icons = new Skycons({
+            "color": "#fff"
+        }, {
+            "resizeClear": true
+        }), list = ["clear-day", "clear-night", "partly-cloudy-day",
+            "partly-cloudy-night", "cloudy", "rain", "sleet", "snow",
+            "wind", "fog"], i;
+
+        for (i = list.length; i--;)
+            icons.set(list[i], list[i]);
+        icons.play();
+    }
+    ;
+
+    // scroll
+
+    $(document).ready(function () {
+
+        $("#boxscroll").niceScroll({
+            cursorborder: "",
+            cursorcolor: "#cecece",
+            boxzoom: true
+        });
+        $("#boxscroll2").niceScroll({
+            cursorborder: "",
+            cursorcolor: "#cecece",
+            boxzoom: true
+        });
+
+    });
+</script>
+<!-- for other js file-->
+{% block tail_js %}
+
+{% endblock %}
+
+</body>
+</html>

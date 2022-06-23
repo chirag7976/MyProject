@@ -1,0 +1,152 @@
+{% extends 'faculty/index.html' %}
+{% block extraCSS %}
+    <link href="../../static/facultyResources/css/alertify.css" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block mainbody %}
+
+    <div class="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box">
+                        <div class="btn-group float-right">
+                            <ol class="breadcrumb hide-phone p-0 m-0">
+                                <li class="breadcrumb-item"><a href="/faculty/loadDashboard">Faculty Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="#">Manage Student</a></li>
+                                <li class="breadcrumb-item active">View Student</li>
+                            </ol>
+                        </div>
+                        <h4 class="page-title">Student List</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title end breadcrumb -->
+
+            <div class="row">
+                <div class="col-lg-12 col-sm-12">
+                    <div class="card m-b-30 ">
+                        <div class="card-body table-responsive">
+                            <table id="datatable" class="table table-bordered ">
+                                <thead>
+                                <tr>
+                                    <th style="width: 2%">Sr NO.</th>
+                                    <th style="width: 8%"> Name</th>
+                                    <th style="width: 2%"> Email</th>
+                                    <th style="width: 5%"> Gender</th>
+                                    <th style="width: 8%"> Contact Number</th>
+                                    <th style="width: 5%"> Student Status</th>
+                                    <th style="width: 10%; text-align: center"> Actions</th>
+                                    <th style="width: 6%; text-align: center"> Test History</th>
+                                </tr>
+                                </thead>
+
+
+                                <tbody>
+                                {% for row in studentVOList %}
+                                    <tr>
+                                        <td>{{ studentVOList.index(row) + 1 }} </td>
+                                        <td>{{ row['studentFirstName'] }} {{ row['studentLastName'] }}</td>
+                                        <td>{{ row['studentEmail'] }}</td>
+                                        <td>{{ row['studentGender'] }}</td>
+                                        <td>{{ row['studentContactNumber'] }}</td>
+                                        <td>{{ row['studentStatus'] }}</td>
+                                        <td class="text-center"><a class="btn btn-warning mr-3 ml-3"
+                                               href="/faculty/editStudent?studentId={{ row['studentId'] }}">Edit</a>
+
+                                            {% if row['studentStatus'] == 'active' %}
+                                                <button class="btn btn-danger"
+                                                        onclick="confirmAction(this, 'Are you sure you wish to Block this?', performBlock, {{ row['studentId'] }}); return false;">
+                                                Block
+                                                </button>
+{#                                                <a class="btn btn-danger mr-3"#}
+{#                                                   onclick="confirmAction(this, 'Are you sure you wish to Block this?', performBlock, {{ row['studentId'] }}); return false;"#}
+{#                                                    href="#">Block</a>#}
+                                            {% else %}
+                                                <button class="btn btn-primary"
+                                                        onclick="confirmAction(this, 'Are you sure to unblock this?', performUnblock, {{ row['studentId'] }}); return false;">
+                                                Unblock
+                                                </button>
+                                            {% endif %}
+                                        </td>
+                                        <td><a class="btn btn-warning"
+                                               href="/faculty/viewTest?studentId={{ row['studentId'] }}">View</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+
+
+        </div>
+        <!-- container -->
+    </div>
+    <!-- Page content Wrapper -->
+
+{% endblock %}
+
+{% block tail_js %}
+    <!-- Required datatable js -->
+    <script src="../../static/facultyResources/js/jquery.dataTables.min.js"></script>
+    <script src="../../static/facultyResources/js/dataTables.bootstrap4.min.js"></script>
+    <!-- Buttons examples -->
+    <script src="../../static/facultyResources/js/dataTables.buttons.min.js"></script>
+    <script src="../../static/facultyResources/js/buttons.bootstrap4.min.js"></script>
+    <script src="../../static/facultyResources/js/jszip.min.js"></script>
+    <script src="../../static/facultyResources/js/pdfmake.min.js"></script>
+    <script src="../../static/facultyResources/js/vfs_fonts.js"></script>
+    <script src="../../static/facultyResources/js/buttons.html5.min.js"></script>
+    <script src="../../static/facultyResources/js/buttons.print.min.js"></script>
+    <script src="../../static/facultyResources/js/buttons.colVis.min.js"></script>
+    <!-- Responsive examples -->
+    <script src="../../static/facultyResources/js/dataTables.responsive.min.js"></script>
+    <script src="../../static/facultyResources/js/responsive.bootstrap4.min.js"></script>
+    <!-- Datatable init js -->
+    <script src="../../static/facultyResources/js/datatables.init.js"></script>
+    <!-- Alertify -->
+    <script src="../../static/facultyResources/js/alertify.js"></script>
+    <script src="../../static/facultyResources/js/ngAlertify.js"></script>
+
+    <script type="text/javascript">$(document).ready(function () {
+
+    });</script>
+    <script type="text/javascript">
+        alertify.defaults.transition = "slide";
+        alertify.defaults.theme.ok = "btn btn-primary";
+        alertify.defaults.theme.cancel = "btn btn-danger";
+        alertify.defaults.theme.input = "form-control";
+
+        function performBlock ( button_element, studentId ) {
+                // perform your delete here
+                // a_element is the <a> tag that was clicked
+                var blockurl = "/faculty/blockStudent?studentId="+studentId;
+                window.open(blockurl, "_parent");
+            }
+
+        function performUnblock ( button_element, studentId ) {
+                // perform your delete here
+                // a_element is the <a> tag that was clicked
+                var unblockurl = "/faculty/unblockStudent?studentId="+studentId;
+                window.open(unblockurl, "_parent");
+            }
+
+        function confirmAction ( button_element, message, action, studentId) {
+            alertify.confirm(message, function(e) {
+                if (e) {
+                    // a_element is the <a> tag that was clicked
+                    if (action) {
+                        action(button_element, studentId);
+                    }
+                }
+            });
+        }
+
+    </script>
+{% endblock %}
+
